@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="storageViewModel"
+            type="com.sample.storagescope.ui.storage_info.StorageViewModel" />
+    </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -13,16 +19,16 @@
             tools:ignore="SpUsage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_title"
+            android:text="@string/label_internal_storage_info_title"
             android:gravity="center"
-            android:textSize="21dp"
+            android:textSize="16dp"
             android:layout_marginBottom="12dp" />
 
-        <Button
-            android:id="@+id/btn_system_info"
+        <TextView
+            android:id="@+id/tv_storage_info"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="@string/btn_storage_info" />
+            android:layout_height="match_parent"
+            android:text="@{storageViewModel.internalStoragePath}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

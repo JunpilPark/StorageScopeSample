@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">StorageScopeSample</string>
+    <string name="label_title">범위 저장소 정책 샘플</string>
+    <string name="btn_storage_info">저장소 경로 보기</string>
+    <string name="label_internal_storage_info_title">내부 저장소 경로 보기</string>
+    <string name="label_external_storage_info_title">외부 저장소 경로 보기</string>
 </resources>
