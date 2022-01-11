@@ -2,7 +2,6 @@ package com.sample.storagescope.ui.storage_info
 
 import android.app.Application
 import android.os.Build
-import android.os.Environment
 import android.os.storage.StorageManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
@@ -12,7 +11,6 @@ import androidx.lifecycle.MutableLiveData
 import com.sample.storagescope.ui.storage_info.data.Paragraph
 import com.sample.storagescope.ui.storage_info.data.Section
 import java.io.File
-import java.lang.StringBuilder
 import java.util.*
 
 class StorageViewModel(application: Application): AndroidViewModel(application) {
@@ -36,7 +34,7 @@ class StorageViewModel(application: Application): AndroidViewModel(application) 
     private fun getCacheDirInInternalStorageSection(application: Application): Section {
         val section = Section()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            section.append(Paragraph("cacheDir 의 사용 가능한 용량", convertShortStorageUnit(getAvailableBytes(application.cacheDir))))
+            section.append(Paragraph("cacheDir 의 사용 가능한 용량", getAvailableBytes(application.cacheDir).toShortStorageUnit()))
         }
         section.append(Paragraph("cacheDir.absolutePath", application.cacheDir.absolutePath))
             .append(Paragraph("cacheDir.path", application.cacheDir.path))
@@ -46,7 +44,7 @@ class StorageViewModel(application: Application): AndroidViewModel(application) 
     private fun getFilesDirDirInInternalStorageSection(application: Application): Section {
         val section = Section()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            section.append(Paragraph("filesDir 의 사용 가능한 용량", convertShortStorageUnit(getAvailableBytes(application.filesDir))))
+            section.append(Paragraph("filesDir 의 사용 가능한 용량", getAvailableBytes(application.filesDir).toShortStorageUnit()))
         }
         return  section.append(Paragraph("filesDir.absolutePath", application.filesDir.absolutePath))
             .append(Paragraph("filesDir.path", application.filesDir.path))
@@ -59,16 +57,17 @@ class StorageViewModel(application: Application): AndroidViewModel(application) 
         return storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
     }
 
-    private fun convertShortStorageUnit(byte: Long): String {
-        val unit = listOf("Byte", "KB", "MB", "GB", "TB")
-        var divide: Float = byte.toFloat()
-        for (i: Int in 0..unit.size) {
-            val temp:Float = divide / 1024.0f
-            if(temp <= 1.0f) {
-                return "$divide ${unit[i]}"
-            }
-            divide = temp
+}
+
+private fun Long.toShortStorageUnit() : String {
+    val unit = listOf("Byte", "KB", "MB", "GB", "TB")
+    var divide: Float = this.toFloat()
+    for (i: Int in 0..unit.size) {
+        val temp:Float = divide / 1024.0f
+        if(temp <= 1.0f) {
+            return "$divide ${unit[i]}"
         }
-        return "$divide ${unit.last()}"
+        divide = temp
     }
+    return "$divide ${unit.last()}"
 }
