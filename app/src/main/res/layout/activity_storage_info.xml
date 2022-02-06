@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:scrollbars="vertical"
         android:padding="8dp"
         tools:context=".ui.main.MainActivity">
 
@@ -27,8 +28,30 @@
         <TextView
             android:id="@+id/tv_storage_info"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="@{storageViewModel.internalStoragePath}"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@android:color/holo_red_dark"/>
+
+        <TextView
+            tools:ignore="SpUsage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_external_storage_info_title"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:id="@+id/tv_external_storage_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{storageViewModel.externalStoragePath}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
